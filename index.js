@@ -23,24 +23,34 @@ const products = [
   },
 
   {
-  id: 3,
-  name: "Tablet",
-  price: 20000,
-  category: "Electronics",
-},
-{
-  id: 4,
-  name: "Shoes",
-  price: 4000,
-  category: "Fashion",
-},
-{
-  id: 5,
-  name: "Camera",
-  price: 35000,
-  category: "Electronics",
-}
+    id: 3,
+    name: "Tablet",
+    price: 20000,
+    category: "Electronics",
+  },
+
+  {
+    id: 4,
+    name: "Shoes",
+    price: 4000,
+    category: "Fashion",
+  },
+
+  {
+    id: 5,
+    name: "Camera",
+    price: 35000,
+    category: "Electronics",
+  }
 ];
+
+app.get("/login", (req, res) => {
+  res.sendFile(path.join(__dirname, "views", "login.html"));
+});
+
+app.get("/signup", (req, res) => {
+  res.sendFile(path.join(__dirname, "views", "signup.html"));
+});
 
 app.get("/", (req, res) => {
   res.sendFile(path.join(__dirname, "views", "index.html"));
@@ -55,14 +65,14 @@ app.get("/products", (req, res) => {
   const search = req.query.search;
 
   let filteredProducts = products;
+
   const page = parseInt(req.query.page) || 1;
 
-const limit = 2;
+  const limit = 2;
 
-const startIndex = (page - 1) * limit;
+  const startIndex = (page - 1) * limit;
 
-const endIndex = startIndex + limit;
-  
+  const endIndex = startIndex + limit;
 
   if (search) {
     filteredProducts = products.filter((product) =>
@@ -95,33 +105,31 @@ const endIndex = startIndex + limit;
   `;
 
   filteredProducts
-  .slice(startIndex, endIndex)
-  .forEach((product) => {
-    html += `
-      <div>
-        <h2>${product.name}</h2>
+    .slice(startIndex, endIndex)
+    .forEach((product) => {
 
-        <p>Price: ${product.price}</p>
+      html += `
+        <div>
+          <h2>${product.name}</h2>
 
-        <a href="/products/${product.id}">
-          View Details
-        </a>
+          <p>Price: ${product.price}</p>
 
-        <hr>
-      </div>
-    `;
-  });
+          <a href="/products/${product.id}">
+            View Details
+          </a>
 
+          <hr>
+        </div>
+      `;
+    });
 
+  html += `
+    <a href="/products?page=${page + 1}">
+      Next Page
+    </a>
+  `;
 
-html += `
-  <a href="/products?page=${page + 1}">
-    Next Page
-  </a>
-`;
-
-res.send(html);
-
+  res.send(html);
 });
 
 app.post("/add-product", (req, res) => {

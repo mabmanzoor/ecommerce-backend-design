@@ -45,3 +45,52 @@ nav {
 nav a {
   margin-right: 15px;
 }
+
+footer {
+  margin-top: 30px;
+  text-align: center;
+  color: gray;
+}
+
+nav {
+  background-color: black;
+  padding: 15px;
+}
+
+nav a {
+  color: white;
+  margin-right: 20px;
+  text-decoration: none;
+  font-size: 18px;
+}
+
+body {
+  font-family: Arial;
+  margin: 0;
+  padding: 0;
+}
+
+.container {
+  padding: 20px;
+}
+
+.product-card {
+  border: 1px solid #ddd;
+  padding: 15px;
+  margin-top: 20px;
+  border-radius: 10px;
+  background-color: #f5f5f5;
+}
+
+button {
+  padding: 10px 20px;
+  background-color: blue;
+  color: white;
+  border: none;
+  border-radius: 5px;
+}
+
+input {
+  padding: 10px;
+  width: 250px;
+}

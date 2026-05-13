@@ -62,9 +62,15 @@ app.get("/add-product", (req, res) => {
 
 app.get("/products", (req, res) => {
 
-  const search = req.query.search;
+  const search = req.query.search || "";
 
   let filteredProducts = products;
+
+  if (search) {
+    filteredProducts = products.filter((product) =>
+      product.name.toLowerCase().includes(search.toLowerCase())
+    );
+  }
 
   const page = parseInt(req.query.page) || 1;
 
@@ -74,13 +80,31 @@ app.get("/products", (req, res) => {
 
   const endIndex = startIndex + limit;
 
-  if (search) {
-    filteredProducts = products.filter((product) =>
-      product.name.toLowerCase().includes(search.toLowerCase())
-    );
-  }
-
   let html = `
+<!DOCTYPE html>
+
+<html>
+
+<head>
+
+  <title>Products Page</title>
+
+  <link rel="stylesheet" href="/style.css">
+
+</head>
+
+<body>
+
+  <nav>
+    <a href="/">Home</a>
+    <a href="/products">Products</a>
+    <a href="/add-product">Add Product</a>
+    <a href="/login">Login</a>
+    <a href="/signup">Signup</a>
+  </nav>
+
+  <div class="container">
+
     <h1>Products Page</h1>
 
     <a href="/add-product">
@@ -102,34 +126,60 @@ app.get("/products", (req, res) => {
     </form>
 
     <br>
-  `;
+`;
 
   filteredProducts
     .slice(startIndex, endIndex)
     .forEach((product) => {
 
       html += `
-        <div>
+        <div class="product-card">
+
           <h2>${product.name}</h2>
 
           <p>Price: ${product.price}</p>
+
+          <p>Category: ${product.category}</p>
 
           <a href="/products/${product.id}">
             View Details
           </a>
 
-          <hr>
         </div>
       `;
     });
 
   html += `
-    <a href="/products?page=${page + 1}">
+    <br>
+
+    <a href="/products?page=${page + 1}&search=${search}">
       Next Page
     </a>
-  `;
+
+  </div>
+
+</body>
+
+</html>
+`;
 
   res.send(html);
+});
+
+app.post("/login", (req, res) => {
+
+  const email = req.body.email;
+
+  const password = req.body.password;
+
+  if (
+    email === "admin@gmail.com" &&
+    password === "12345"
+  ) {
+    res.redirect("/products");
+  } else {
+    res.send("Invalid Email or Password");
+  }
 });
 
 app.post("/add-product", (req, res) => {
@@ -153,6 +203,22 @@ app.get("/products/:id", (req, res) => {
   const product = products.find((p) => p.id === productId);
 
   res.send(`
+<!DOCTYPE html>
+
+<html>
+
+<head>
+
+  <title>Product Details</title>
+
+  <link rel="stylesheet" href="/style.css">
+
+</head>
+
+<body>
+
+  <div class="container">
+
     <h1>${product.name}</h1>
 
     <p>Price: ${product.price}</p>
@@ -162,6 +228,12 @@ app.get("/products/:id", (req, res) => {
     <a href="/products">
       Back
     </a>
+
+  </div>
+
+</body>
+
+</html>
   `);
 });
 

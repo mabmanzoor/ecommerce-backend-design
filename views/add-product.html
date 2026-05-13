@@ -1,45 +1,63 @@
+
 <!DOCTYPE html>
 <html>
 
 <head>
   <title>Add Product</title>
+  <link rel="stylesheet" href="/style.css">
 </head>
 
 <body>
 
-  <h1>Add Product</h1>
+  <nav>
+    <a href="/">Home</a>
+    <a href="/products">Products</a>
+    <a href="/add-product">Add Product</a>
+    <a href="/login">Login</a>
+    <a href="/signup">Signup</a>
+  </nav>
 
-  <form method="POST" action="/add-product">
+  <div class="container">
 
-    <input 
-      type="text" 
-      name="name" 
-      placeholder="Product Name"
-    >
+    <h1>Add New Product</h1>
 
-    <br><br>
+    <div class="product-card">
 
-    <input 
-      type="number" 
-      name="price" 
-      placeholder="Price"
-    >
+      <form method="POST" action="/add-product">
 
-    <br><br>
+        <input 
+          type="text" 
+          name="name" 
+          placeholder="Product Name"
+        >
 
-    <input 
-      type="text" 
-      name="category" 
-      placeholder="Category"
-    >
+        <br><br>
 
-    <br><br>
+        <input 
+          type="number" 
+          name="price" 
+          placeholder="Price"
+        >
 
-    <button type="submit">
-      Add Product
-    </button>
+        <br><br>
 
-  </form>
+        <input 
+          type="text" 
+          name="category" 
+          placeholder="Category"
+        >
+
+        <br><br>
+
+        <button type="submit">
+          Add Product
+        </button>
+
+      </form>
+
+    </div>
+
+  </div>
 
 </body>
 

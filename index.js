@@ -108,7 +108,7 @@ app.get("/products", (req, res) => {
     <h1>Products Page</h1>
 
     <a href="/add-product">
-      Add Product
+      <button>Add Product</button>
     </a>
 
     <br><br>
@@ -125,7 +125,7 @@ app.get("/products", (req, res) => {
       </button>
     </form>
 
-    <br>
+    <div class="product-grid">
 `;
 
   filteredProducts
@@ -133,27 +133,48 @@ app.get("/products", (req, res) => {
     .forEach((product) => {
 
       html += `
-        <div class="product-card">
+  <div class="product-card">
 
-          <h2>${product.name}</h2>
+    <img 
+  src="${
+    product.name === 'Laptop'
+      ? 'https://images.unsplash.com/photo-1496181133206-80ce9b88a853'
+      : product.name === 'Phone'
+      ? 'https://images.unsplash.com/photo-1511707171634-5f897ff02aa9'
+      : product.name === 'Watch'
+      ? 'https://images.unsplash.com/photo-1523275335684-37898b6baf30'
+      : product.name === 'Shoes'
+      ? 'https://images.unsplash.com/photo-1542291026-7eec264c27ff'
+      : product.name === 'Tablet'
+      ? 'https://images.unsplash.com/photo-1544244015-0df4b3ffc6b0'
+      : product.name === 'Camera'
+      ? 'https://images.unsplash.com/photo-1516035069371-29a1b244cc32'
+      : 'https://images.unsplash.com/photo-1505740420928-5e560c06d30e'
+  }"
+>
 
-          <p>Price: ${product.price}</p>
+    <h2>${product.name}</h2>
 
-          <p>Category: ${product.category}</p>
+    <p>Price: ${product.price}</p>
 
-          <a href="/products/${product.id}">
-            View Details
-          </a>
+    <p>Category: ${product.category}</p>
 
-        </div>
-      `;
+    <a href="/products/${product.id}">
+      <button>View Details</button>
+    </a>
+
+  </div>
+`;
     });
 
   html += `
+
+    </div>
+
     <br>
 
     <a href="/products?page=${page + 1}&search=${search}">
-      Next Page
+      <button>Next Page</button>
     </a>
 
   </div>
@@ -217,17 +238,30 @@ app.get("/products/:id", (req, res) => {
 
 <body>
 
+  <nav>
+    <a href="/">Home</a>
+    <a href="/products">Products</a>
+  </nav>
+
   <div class="container">
 
-    <h1>${product.name}</h1>
+    <div class="product-card">
 
-    <p>Price: ${product.price}</p>
+      <img 
+        src="https://images.unsplash.com/photo-1496181133206-80ce9b88a853"
+      >
 
-    <p>Category: ${product.category}</p>
+      <h1>${product.name}</h1>
 
-    <a href="/products">
-      Back
-    </a>
+      <p>Price: ${product.price}</p>
+
+      <p>Category: ${product.category}</p>
+
+      <a href="/products">
+        <button>Back</button>
+      </a>
+
+    </div>
 
   </div>
 
